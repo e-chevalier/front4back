@@ -16,15 +16,15 @@ export const useCartContext = () => {
 
 const CartContextProvider = ({ children }) => {
 
-    const [products, cartId, setCartid ] = useCarrito();
+    const [products, loading, cartId, setCartid ] = useCarrito();
     const [cartList, setCartList] = useState([])
     const [cartCounter, setCartCounter] = useState(0)
     const [subTotal, setSubTotal] = useState(0)
         
     useEffect(() => {
         setCartList(products)
-    }, [products]);
 
+    }, [products, loading]);
 
 
 
