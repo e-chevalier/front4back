@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
+import useCarrito from '../hooks/useCarrito';
 
 const CartContext = createContext([])
 
@@ -15,9 +16,18 @@ export const useCartContext = () => {
 
 const CartContextProvider = ({ children }) => {
 
+    const [products, cartId, setCartid ] = useCarrito();
     const [cartList, setCartList] = useState([])
     const [cartCounter, setCartCounter] = useState(0)
     const [subTotal, setSubTotal] = useState(0)
+        
+    useEffect(() => {
+        setCartList(products)
+    }, [products]);
+
+
+
+
 
     /**
      *  Function to determine if an item is in the cart 
@@ -42,6 +52,14 @@ const CartContextProvider = ({ children }) => {
             item.qty = qty
             setCartList([...cartList, item])
         }
+
+        let options = { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ id_prod: item.id })}
+        fetch(`http://127.0.0.1:8080/api/carrito/${cartId}/productos`, options)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data); // JSON data parsed by `data.json()` call
+        })
+
         setCartCounter(cartCounter + qty)
         setSubTotal(subTotal + item.price * qty)
     }
@@ -56,6 +74,13 @@ const CartContextProvider = ({ children }) => {
         setCartCounter(cartCounter - item.qty)
         setSubTotal(subTotal - item.price * item.qty)
         setCartList(cartList.filter(prod => prod.id !== itemId))
+        
+        let options = { method: 'DELETE' }
+        fetch(`http://127.0.0.1:8080/api/carrito/${cartId}/productos/${itemId}`, options)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data); // JSON data parsed by `data.json()` call
+        })
     }
 
 
@@ -63,10 +88,26 @@ const CartContextProvider = ({ children }) => {
      *  Function to empty the cart 
      */
 
-    const clear = () => {
+    const clear = async () => {
         // TODO: Iterate over cartList and restore the stock.
         console.log("Call clear()")
         setCartCounter(0)
+        setCartList([])
+
+        let options = { method: 'DELETE' }
+        await fetch(`http://127.0.0.1:8080/api/carrito/${cartId}`, options)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data); // JSON data parsed by `data.json()` call
+        })
+
+        let newCart_id = await (fetch(`http://localhost:8080/api/carrito/`, { method: 'POST' })
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data)
+                                return data.id
+                            }))
+        setCartid(newCart_id)
         setCartList([])
     }
 

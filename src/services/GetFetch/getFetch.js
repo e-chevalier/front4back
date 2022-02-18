@@ -1,21 +1,16 @@
-//import products from '../products';
+const getFetch = async (id = 0) => {
 
-const getFetch = (id = 0) => {
-    // return (
-    //     new Promise((resolve, reject) => {
-    //         setTimeout(() => {
-    //             id === 0 ? resolve(products) : resolve(products.filter(prod => prod.id === id))
-    //         }, 2000)
-    //     })
-    // )
-
-    return ( fetch('http://localhost:8080/api/productos')
-    .then(res => res.json())
-    .then( data => {
-        console.log(data)
-        return data.products
-    }))
-    .catch ( err => console.log(err))
+    try {
+        return await (fetch(`http://localhost:8080/api/productos${id !== 0 ? '/'+id: ''}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                return id === 0 ? data.products : data.products.filter(prod => prod.id === id)
+            }));
+    } catch (err) {
+        return console.log(err)
+    }
+    
 }
 
 export default getFetch;

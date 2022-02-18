@@ -26,11 +26,11 @@ const ItemDetail = ({ product }) => {
         <Card className="my-5">
             <Row className="g-0">
                 <Col md={4} lg={{ span: 2, offset: 3 }}>
-                    <img id="img" className="card-img-top" src={"/assets/img/product/" + product.id + ".jpg"} alt={product.name} />
+                    <img id="img" className="card-img-top" src={"/assets/img/product/" + product.id + ".jpg"} alt={product.title} />
                 </Col>
                 <Col md={8} lg={{ span: 4 }}>
                     <Card.Body className="text-center">
-                        <Card.Title className="fs-2">{product.name}</Card.Title>
+                        <Card.Title className="fs-2">{product.title}</Card.Title>
                         <Card.Text>Precio por Kg  <span className="fw-bold fs-4">${product.price}</span></Card.Text>
                         <Card.Text className="my-5 text-start">{product.description}</Card.Text>
                         {wasClicked ?

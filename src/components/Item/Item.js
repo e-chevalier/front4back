@@ -15,7 +15,7 @@ const Item = ({ prod, initial }) => {
 
         if (qty <= prod.stock && qty > 0) {
             addItem(prod, qty)
-            console.log("Cantidad seleccionada de " + prod.name + " es: " + qty + " Kg.");
+            console.log("Cantidad seleccionada de " + prod.title + " es: " + qty + " Kg.");
         } else {
             console.log("Qty en OnAdd no cumple con los requisitos.");
         }
@@ -26,12 +26,12 @@ const Item = ({ prod, initial }) => {
         <Col className="col py-4 px-4 px-lg-2 py-lg-3">
             <Card className="h-100 mx-2">
                 <Card.Header className="text-center">
-                    <Card.Title>{prod.name}</Card.Title>
+                    <Card.Title>{prod.title}</Card.Title>
                 </Card.Header>
 
                 <Row as={Link} to={`/item/${prod.id}`} className="h-100 g-0 pt-3 text-decoration-none text-body">
                     <Col xs={6}>
-                        <img id="img" className="card-img-top" src={`${prod.thumbnail}`} alt={prod.name} />
+                        <img id="img" className="card-img-top" src={`${prod.thumbnail}`} alt={prod.title} />
                     </Col>
                     <Col xs={6}>
                         <Card.Body>
