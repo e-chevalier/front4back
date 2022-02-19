@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailContainer';
+import ItemUpdateContainer from './components/ItemUpdateContainer/ItemUpdateContainer';
 import ItemFormContainer from './components/ItemFormContainer/ItemFormContainer';
 import Cart from './components/Cart/Cart';
 import CartContextProvider from './context/CartContext';
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route exact path='/' element={<ItemListContainer greeting={greeting} />} />
           <Route path='category/:id' element={<ItemListContainer greeting={greeting} />} />
+          <Route path='itemUpdate/:id' element={<ItemUpdateContainer />} />
           <Route path='item/:id' element={<ItemDetailContainer />} />
           <Route path='cart' element={<Cart />} />
           <Route path='addProd' element={<ItemFormContainer/>} />

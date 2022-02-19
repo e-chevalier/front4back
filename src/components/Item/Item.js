@@ -34,6 +34,10 @@ const Item = ({ prod, initial, deleteProd }) => {
                         className="border-0 m-2 position-absolute top-0 end-0 badge border border-light rounded-circle bg-danger p-2">
                         <i className="bi bi-trash"></i>
                     </Button>
+                    <Button as={Link} to={`/itemUpdate/${prod.id}`} variant="outline-dark" 
+                    className="border-0 m-2 position-absolute top-0 start-0 badge border border-light rounded-circle bg-success p-2">
+                        <i class="bi bi-pencil"></i>
+                    </Button>
                 </Card.Header>
 
                 <Row as={Link} to={`/item/${prod.id}`} className="h-100 g-0 pt-3 text-decoration-none text-body">
