@@ -4,10 +4,11 @@ import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Accordion from 'react-bootstrap/Accordion'
+import Button from 'react-bootstrap/Button';
 
 import ItemCount from '../ItemCount/ItemCount'
 
-const Item = ({ prod, initial }) => {
+const Item = ({ prod, initial, deleteProd }) => {
 
     const { addItem } = useCartContext();
     
@@ -22,11 +23,17 @@ const Item = ({ prod, initial }) => {
 
     }
 
+    
+
     return (
         <Col className="col py-4 px-4 px-lg-2 py-lg-3">
             <Card className="h-100 mx-2">
-                <Card.Header className="text-center">
+                <Card.Header className="text-center position-relative">
                     <Card.Title>{prod.title}</Card.Title>
+                    <Button onClick={() => { deleteProd(prod) }} id={"removeButton-" + prod.id} size="md" variant="outline-dark" 
+                        className="border-0 m-2 position-absolute top-0 end-0 badge border border-light rounded-circle bg-danger p-2">
+                        <i className="bi bi-trash"></i>
+                    </Button>
                 </Card.Header>
 
                 <Row as={Link} to={`/item/${prod.id}`} className="h-100 g-0 pt-3 text-decoration-none text-body">
