@@ -18,7 +18,7 @@ const ItemFormContainer = () => {
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
 
         event.preventDefault();
         event.stopPropagation();
@@ -35,7 +35,7 @@ const ItemFormContainer = () => {
             }
 
             let options = { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(prod)}
-            fetch(`http://127.0.0.1:8080/api/productos`, options)
+            await fetch(`http://127.0.0.1:8080/api/productos`, options)
             .then(res => res.json())
             .then(data => {
                 console.log(data); // JSON data parsed by `data.json()` call
@@ -43,6 +43,7 @@ const ItemFormContainer = () => {
             })
 
             handleClose()
+            window.location.reload()
             
         }
         

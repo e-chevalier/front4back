@@ -2,9 +2,9 @@ import ItemDetail from '../ItemUpdate/ItemUpdate';
 import Loading from '../Loading/Loading';
 import useFetch from '../../hooks/useFetch';
 import { useState } from 'react'
-
 import { useParams } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
+import { useNavigate } from 'react-router-dom';
 
 
 const ItemUpdateContainer = () => {
@@ -12,7 +12,6 @@ const ItemUpdateContainer = () => {
     const { id } = useParams();
     const [products, loading] = useFetch(id);
 
-    const [show, setShow] = useState(false)
     const [validated, setValidated] = useState(false);
     const [title, setTitle] = useState('')
     const [price, setPrice] = useState(0)
@@ -20,11 +19,9 @@ const ItemUpdateContainer = () => {
     const [thumbnail, setThumbnail] = useState('')
     const [code, setCode] = useState('')
     const [stock, setStock] = useState(0)
+    let navigate = useNavigate();
 
-    const handleClose = () => setShow(false)
-    const handleShow = () => setShow(true)
-
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
 
         event.preventDefault();
         event.stopPropagation();
@@ -44,15 +41,19 @@ const ItemUpdateContainer = () => {
                 qty: 0
             }
 
+            let text = `Se va a modificar el producto ${products[0].title}`
             let options = { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(prod)}
-            fetch(`http://127.0.0.1:8080/api/productos/${prodId}`, options)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data); // JSON data parsed by `data.json()` call
-                alert("Producto modificado ID:" + data.id )
-            })
+        
+            if (window.confirm(text) === true) {
+                await fetch(`http://127.0.0.1:8080/api/productos/${prodId}`, options)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data); // JSON data parsed by `data.json()` call
+                    alert("Producto actualizado ID:" + data.id )
+                })
+            }
 
-            handleClose()
+            navigate('/')
             
         }
         
@@ -60,7 +61,6 @@ const ItemUpdateContainer = () => {
     }
 
     let commonProps = {
-        show: show,
         validated: validated,
         setTitle: setTitle,
         setPrice: setPrice,
@@ -68,8 +68,6 @@ const ItemUpdateContainer = () => {
         setThumbnail: setThumbnail,
         setCode: setCode,
         setStock: setStock,
-        handleShow: handleShow,
-        handleClose: handleClose,
         handleSubmit: handleSubmit
     }
 
