@@ -26,7 +26,7 @@ const ItemDetail = ({ product }) => {
         <Card className="my-5">
             <Row className="g-0">
                 <Col md={4} lg={{ span: 2, offset: 3 }}>
-                    <img id="img" className="card-img-top" src={"/assets/img/product/" + product.id + ".jpg"} alt={product.title} />
+                    <img id="img" className="card-img-top" src={product.thumbnail} alt={product.title} />
                 </Col>
                 <Col md={8} lg={{ span: 4 }}>
                     <Card.Body className="text-center">

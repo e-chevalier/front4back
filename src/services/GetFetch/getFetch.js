@@ -5,7 +5,7 @@ const getFetch = async (id = 0) => {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                return id === 0 ? data.products : data.products.filter(prod => prod.id === id)
+                return data.products
             }));
     } catch (err) {
         return console.log(err)

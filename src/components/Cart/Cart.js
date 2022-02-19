@@ -41,7 +41,7 @@ const Cart = () => {
                                 <Col xs={5}>
                                     <Row as={Link} to={`/item/${prod.id}`} className="align-items-center justify-content-center flex-column flex-md-row text-decoration-none text-dark">
                                         <Col xs={12} md={{ span: 4, offset: 2 }} className="text-center">
-                                            <img src={"/assets/img/product/" + prod.id + "_100px.png"} alt={prod.title} />
+                                            <img className="img_small" src={prod.thumbnail} alt={prod.title}/>
                                         </Col>
                                         <Col xs={12} md={6} className="text-center text-md-start txt-lg-start txt-xl-start">
                                             <div>{prod.title}</div>

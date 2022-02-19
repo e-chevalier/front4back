@@ -1,9 +1,10 @@
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import FloatingLabel from 'react-bootstrap/FloatingLabel'
 
 
-const ItemForm = ({show, validated, setName, setEmail, setEmailConfirm, setPhone, handleShow, handleClose, handleSubmit}) => {
+const ItemForm = ({show, validated, setTitle, setPrice, setDescription, setThumbnail, setCode, setStock, handleShow, handleClose, handleSubmit}) => {
 
     return (
         <>
@@ -18,25 +19,41 @@ const ItemForm = ({show, validated, setName, setEmail, setEmailConfirm, setPhone
                     </Modal.Header>
 
                     <Modal.Body>
-                        <Form.Group className="mb-3" controlId="formBasicName">
-                            <Form.Label>Title</Form.Label>
-                            <Form.Control required type="text" placeholder="Nombre del producto" onBlur={(e) => { setName(e.target.value) }} />
-                            <Form.Control.Feedback type="invalid">No se olvide de ingresar su nombre y apellido..</Form.Control.Feedback>
+                        <Form.Group className="mb-3" controlId="formTitle">
+                            <FloatingLabel label="Nombre" className="mb-3">
+                                <Form.Control required type="text" placeholder="Nombre del producto" onBlur={(e) => { setTitle(e.target.value) }} />
+                                <Form.Control.Feedback type="invalid">No se olvide de ingresar el nombre del producto.</Form.Control.Feedback>
+                            </FloatingLabel>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control required type="email" placeholder="Ingrese email" onBlur={(e) => { setEmail(e.target.value) }} />
-                            <Form.Control.Feedback type="invalid">Ingrese un email válido.</Form.Control.Feedback>
+                        <Form.Group className="mb-3" controlId="formPrice">
+                            <FloatingLabel label="Precio" className="mb-3">
+                                <Form.Control required type="number" placeholder="Ingrese valor del producto" onBlur={(e) => { setPrice(e.target.value) }} />
+                                <Form.Control.Feedback type="invalid">Ingrese un precio válido.</Form.Control.Feedback>
+                            </FloatingLabel>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmailCheck">
-                            <Form.Label>Confirmar Email</Form.Label>
-                            <Form.Control required type="email" placeholder="Reingrese email" onBlur={(e) => { setEmailConfirm(e.target.value) }} />
-                            <Form.Control.Feedback type="invalid">Ingrese un email válido.</Form.Control.Feedback>
+                        <Form.Group className="mb-3" controlId="formDescription">
+                            <FloatingLabel label="Descripción" className="mb-3">
+                                <Form.Control  as="textarea" required placeholder="Ingrese descripción del producto" onBlur={(e) => { setDescription(e.target.value) }} />
+                                <Form.Control.Feedback type="invalid">Ingrese un precio válido.</Form.Control.Feedback>
+                            </FloatingLabel>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicPhone">
-                            <Form.Label>Número Teléfono</Form.Label>
-                            <Form.Control required type="number" placeholder="Ingrese número de teléfono" onBlur={(e) => { setPhone(e.target.value) }} />
-                            <Form.Control.Feedback type="invalid">Ingrese un nº de teléfono válido.</Form.Control.Feedback>
+                        <Form.Group className="mb-3" controlId="formThumbnail">
+                            <FloatingLabel label="URL Foto" className="mb-3">
+                                <Form.Control required type="url" placeholder="Ingrese la direccion de la foto del producto." onBlur={(e) => { setThumbnail(e.target.value) }} />
+                                <Form.Control.Feedback type="invalid">Ingrese URL de imagen valido.</Form.Control.Feedback>
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formCode">
+                            <FloatingLabel label="Codigo" className="mb-3">
+                                <Form.Control required type="text" placeholder="Código del producto" onBlur={(e) => { setCode(e.target.value) }} />
+                                <Form.Control.Feedback type="invalid">No se olvide de ingresar el código del producto.</Form.Control.Feedback>
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formStock">
+                            <FloatingLabel label="Stock" className="mb-3">
+                                <Form.Control required type="number" placeholder="Ingrese el Stock del producto" onBlur={(e) => { setStock(e.target.value) }} />
+                                <Form.Control.Feedback type="invalid">Ingrese un Stock válido.</Form.Control.Feedback>
+                            </FloatingLabel>
                         </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
@@ -44,7 +61,7 @@ const ItemForm = ({show, validated, setName, setEmail, setEmailConfirm, setPhone
                             Cancelar
                         </Button>
                         <Button variant="primary" type="submit">
-                            GENERAR
+                            Enviar
                         </Button>
                     </Modal.Footer>
                 </Form>

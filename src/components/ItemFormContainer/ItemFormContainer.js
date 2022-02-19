@@ -25,9 +25,27 @@ const ItemFormContainer = () => {
         const form = event.currentTarget;
 
         if (form.checkValidity() === true) {
-            //updateStock(event);
-        }
+            let prod = {
+                title: title,
+                description: description,
+                code: code,
+                thumbnail: thumbnail,
+                price: Number(price),
+                stock: Number(stock)
+            }
 
+            let options = { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(prod)}
+            fetch(`http://127.0.0.1:8080/api/productos`, options)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data); // JSON data parsed by `data.json()` call
+                alert("Producto agregado ID:" + data.id )
+            })
+
+            handleClose()
+            
+        }
+        
         setValidated(true);
     }
 
