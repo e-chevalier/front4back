@@ -1,4 +1,4 @@
-import ItemDetail from '../ItemUpdate/ItemUpdate';
+import ItemUpdate from '../ItemUpdate/ItemUpdate';
 import Loading from '../Loading/Loading';
 import useFetch from '../../hooks/useFetch';
 import { useState } from 'react'
@@ -29,6 +29,7 @@ const ItemUpdateContainer = () => {
         let prodId = products[0].id
 
         if (form.checkValidity() === true) {
+            
             let prod = {
                 title: title,
                 description: description,
@@ -77,7 +78,7 @@ const ItemUpdateContainer = () => {
             <Loading />
             :
             <Container>
-                <ItemDetail product={products[0]} {...commonProps} />
+                <ItemUpdate product={products[0]} {...commonProps} />
             </Container>
     )
 }

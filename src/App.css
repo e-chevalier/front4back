@@ -40,3 +40,7 @@
 .img_small{
   width: 5rem;
 }
+
+textarea {
+  height: 150px !important;
+}
