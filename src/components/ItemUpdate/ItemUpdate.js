@@ -39,7 +39,7 @@ const ItemUpdate = ({ product, validated, setTitle, setPrice, setDescription, se
                         <p className="bg-light">Vieja URL: {product.thumbnail}</p>
                         <Form.Group className="mb-3" controlId="formThumbnail">
                             <FloatingLabel label="Nueva URL Foto" className="mb-3">
-                                <Form.Control requierd type="text" placeholder="Ingrese la direccion de la foto del producto." onBlur={(e) => { setThumbnail(e.target.value) }} />
+                                <Form.Control required type="text" placeholder="Ingrese la direccion de la foto del producto." onBlur={(e) => { setThumbnail(e.target.value) }} />
                                 <Form.Control.Feedback type="invalid">Ingrese URL de imagen valido.</Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>
