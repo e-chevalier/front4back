@@ -8,6 +8,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import useFetch from '../../hooks/useFetch';
+import RegistrationFormContainer from '../RegistrationFormContainer/RegistrationFormContainer';
 
 
 const NavigationBar = () => {
@@ -66,7 +67,9 @@ const NavigationBar = () => {
                 </Nav>
 
                 <div className="d-flex flex-row align-items-center">
-                  <div id="loginContainer"></div>
+                  <div id="loginContainer">
+                    <RegistrationFormContainer />
+                  </div>
                 </div>
               </Navbar.Collapse>
             </Container>
