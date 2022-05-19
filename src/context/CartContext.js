@@ -20,16 +20,15 @@ const CartContextProvider = ({ children }) => {
     const [cartList, setCartList] = useState([])
     const [cartCounter, setCartCounter] = useState(0)
     const [subTotal, setSubTotal] = useState(0)
+
+    const [user, setUser] = useState({})
         
     useEffect(() => {
         setCartList(products)
 
     }, [products, loading]);
 
-
-
-
-    /**
+     /**
      *  Function to determine if an item is in the cart 
      * @param {*} itemId 
      * @returns 
@@ -112,7 +111,7 @@ const CartContextProvider = ({ children }) => {
     }
 
     return (
-        <CartContext.Provider value={{ cartList, cartCounter, subTotal, addItem, removeItem, clear }}>
+        <CartContext.Provider value={{ cartList, cartCounter, subTotal, addItem, removeItem, clear, user, setUser }}>
             {children}
         </CartContext.Provider>
     )

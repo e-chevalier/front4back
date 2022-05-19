@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import LoginForm from '../LoginForm/LoginForm';
 import Container from 'react-bootstrap/Container';
+import { useCartContext } from '../../context/CartContext';
 
 const LoginFormContainer = () => {
 
+    const {setUser} = useCartContext()
     const [show, setShow] = useState(false)
     const [validated, setValidated] = useState(false);
     const [email, setEmail] = useState('')
@@ -29,6 +31,7 @@ const LoginFormContainer = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data); // JSON data parsed by `data.json()` call
+                setUser(data)
                 alert("Usuario logueado:" + data )
             })
 

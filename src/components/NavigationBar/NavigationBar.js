@@ -10,11 +10,14 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import useFetch from '../../hooks/useFetch';
 import RegistrationFormContainer from '../RegistrationFormContainer/RegistrationFormContainer';
 import LoginFormContainer from '../LoginFormContainer/LoginFormContainer';
+import Logout from '../logout/Logout';
+import { useCartContext } from '../../context/CartContext';
 
 
 
 const NavigationBar = () => {
 
+  const {user} = useCartContext()
   const [products, loadingProducts] = useFetch();
   const [codes, setCodes] = useState([]);
   const [loadingCodes, setLoadingCodes] = useState(true);
@@ -67,11 +70,17 @@ const NavigationBar = () => {
                       </NavDropdown>)
                   }
                 </Nav>
+                  
+                <div className="d-flex flex-row align-items-center">
+                  <span> { user? user.firstname: 'No login yet'} HI</span>
+                </div>
 
                 <div className="d-flex flex-row align-items-center">
                   <div id="loginContainer">
+                    
                     <RegistrationFormContainer />
                     <LoginFormContainer />
+                    <Logout />
                   </div>
                 </div>
               </Navbar.Collapse>
