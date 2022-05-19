@@ -12,6 +12,9 @@ const RegistrationFormContainer = () => {
     const [email, setEmail] = useState('')
     const [firstname, setFirstname] = useState('')
     const [lastname, setLastname] = useState('')
+    const [address, setAddress] = useState('')
+    const [phone, setPhone] = useState('')
+    const [age, setAge] = useState('')
  
 
     const handleClose = () => setShow(false)
@@ -29,8 +32,13 @@ const RegistrationFormContainer = () => {
                 password: password,
                 email: email,
                 firstname: firstname,
-                lastname: lastname
+                lastname: lastname,
+                address: address,
+                phone: phone,
+                age: age
             }
+
+            console.log(newuser)
 
             let options = { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(newuser)}
             await fetch(`http://127.0.0.1:8080/api/registration`, options)
@@ -56,6 +64,9 @@ const RegistrationFormContainer = () => {
         setEmail: setEmail,
         setFirstname: setFirstname,
         setLastname: setLastname,
+        setAddress: setAddress,
+        setPhone: setPhone,
+        setAge: setAge,
         handleShow: handleShow,
         handleClose: handleClose,
         handleSubmit: handleSubmit

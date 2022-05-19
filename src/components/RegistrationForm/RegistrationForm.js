@@ -4,7 +4,22 @@ import Button from 'react-bootstrap/Button'
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
 
 
-const RegistrationForm = ({show, validated, setUsername, setPassword, setEmail, setFirstname, setLastname, handleShow, handleClose, handleSubmit}) => {
+const RegistrationForm = (
+    {
+        show,
+        validated, 
+        setUsername,
+        setPassword,
+        setEmail,
+        setFirstname,
+        setLastname,
+        setAddress,
+        setPhone,
+        setAge,
+        handleShow,
+        handleClose,
+        handleSubmit
+    }) => {
 
     return (
         <>
@@ -47,6 +62,24 @@ const RegistrationForm = ({show, validated, setUsername, setPassword, setEmail, 
                             <FloatingLabel label="Apellido" className="mb-3">
                                 <Form.Control required type="text" placeholder="Ingrese su apellido" onBlur={(e) => { setLastname(e.target.value) }} />
                                 <Form.Control.Feedback type="invalid">No se olvide de ingresar su apellido.</Form.Control.Feedback>
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formAddress">
+                            <FloatingLabel label="Dirección" className="mb-3">
+                                <Form.Control required type="text" placeholder="Ingrese su dirección" onBlur={(e) => { setAddress(e.target.value) }} />
+                                <Form.Control.Feedback type="invalid">No se olvide de ingresar su dirección.</Form.Control.Feedback>
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formPhone">
+                            <FloatingLabel label="Teléfono" className="mb-3">
+                                <Form.Control required type="text" placeholder="Ingrese su teléfono" onBlur={(e) => { setPhone(e.target.value) }} />
+                                <Form.Control.Feedback type="invalid">No se olvide de ingresar su teléfono.</Form.Control.Feedback>
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formAge">
+                            <FloatingLabel label="Fecha de nacimiento" className="mb-3">
+                                <Form.Control required type="date" placeholder="Ingrese su Fecha de Nacimiento" onBlur={(e) => { setAge(e.target.value) }} />
+                                <Form.Control.Feedback type="invalid">Falta fecha de nacimiento.</Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>
                     </Modal.Body>
