@@ -28,11 +28,13 @@ const NavigationBar = () => {
       products.forEach(prod => { if (!(arrayTemp.includes(prod.code))) { arrayTemp.push(prod.code) } });
       setCodes(arrayTemp);
       setLoadingCodes(false);
+      console.log("-----------")
+      console.log(user)
     }
     return() => {
       setLoadingCodes(true);
     }
-  }, [products, loadingProducts])
+  }, [user, products, loadingProducts])
 
   return (
     loadingCodes ? <Loading />
@@ -72,7 +74,7 @@ const NavigationBar = () => {
                 </Nav>
                   
                 <div className="d-flex flex-row align-items-center">
-                  <span> { user? user.firstname: 'No login yet'} HI</span>
+                  <span> { user? user.firstname + user.lastname: 'No login yet'}</span>
                 </div>
 
                 <div className="d-flex flex-row align-items-center">

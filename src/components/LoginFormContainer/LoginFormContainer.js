@@ -29,17 +29,16 @@ const LoginFormContainer = () => {
             let options = { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(user)}
             await fetch(`http://127.0.0.1:8080/api/login`, options)
             .then(res => res.json())
-            .then(data => {
-                console.log(data); // JSON data parsed by `data.json()` call
-                setUser(data)
-                alert("Usuario logueado:" + data )
+            .then(res => { // JSON data parsed by `data.json()` call
+                setUser(res.data)
+                alert("Usuario logueado: " + res.data.username )
             })
 
             handleClose()
             //window.location.reload()
             
         }
-        
+
         setValidated(true);
     }
 
