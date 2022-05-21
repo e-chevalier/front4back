@@ -26,7 +26,14 @@ const LoginFormContainer = () => {
                 password: password
             }
 
-            let options = { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(user)}
+            console.log("FORM LOGIN VALIDADO")
+
+            let options = { 
+                method: 'POST',
+                credentials: 'include',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(user)}
+
             await fetch(`http://127.0.0.1:8080/api/login`, options)
             .then(res => res.json())
             .then(res => { // JSON data parsed by `data.json()` call
@@ -37,6 +44,8 @@ const LoginFormContainer = () => {
             handleClose()
             //window.location.reload()
             
+        } else {
+            console.log("FORM LOGIN NO VALIDADO")
         }
 
         setValidated(true);

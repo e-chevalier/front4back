@@ -6,11 +6,17 @@ const Logout = () => {
     const handleLogout = async (event) => {
 
         try {
-            let options = { method: 'GET', headers: { 'Content-Type': 'application/json' } }
+            let options = { 
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+            }
+            
             await fetch(`http://127.0.0.1:8080/api/logout`, options)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data); // JSON data parsed by `data.json()` call
+                    console.log(data);
+                     // JSON data parsed by `data.json()` call
                 })
         } catch (error) {
             console.log(error)

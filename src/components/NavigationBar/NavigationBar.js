@@ -28,8 +28,6 @@ const NavigationBar = () => {
       products.forEach(prod => { if (!(arrayTemp.includes(prod.code))) { arrayTemp.push(prod.code) } });
       setCodes(arrayTemp);
       setLoadingCodes(false);
-      console.log("-----------")
-      console.log(user)
     }
     return() => {
       setLoadingCodes(true);
