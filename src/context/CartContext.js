@@ -16,25 +16,52 @@ export const useCartContext = () => {
 
 const CartContextProvider = ({ children }) => {
 
-    const [products, loading, cartId, setCartid ] = useCarrito();
+    const [products, loading, cartId, setCartid] = useCarrito();
     const [cartList, setCartList] = useState([])
     const [cartCounter, setCartCounter] = useState(0)
     const [subTotal, setSubTotal] = useState(0)
 
-    const [user, setUser] = useState({})
-        
+    const [user, setUser] = useState(null)
+
     useEffect(() => {
         setCartList(products)
 
     }, [products, loading]);
 
-     /**
-     *  Function to determine if an item is in the cart 
-     * @param {*} itemId 
-     * @returns 
+
+
+    /**
+     * 
      */
+    const getUser = async () => {
+        try {
+
+            let options = {
+                method: 'GET',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            }
+
+            await fetch(`http://127.0.0.1:8080/api/login`, options)
+                .then(res => res.json())
+                .then(res => { // JSON data parsed by `data.json()` call
+                    console.log(res)
+                    setUser(res.data || null)
+                    //alert("GETUSER: " + res.data.username)
+                })
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    /**
+    *  Function to determine if an item is in the cart 
+    * @param {*} itemId 
+    * @returns 
+    */
     const isInCart = (itemId) => {
-        return( cartList.some(prod => prod.id === itemId) )
+        return (cartList.some(prod => prod.id === itemId))
     }
 
     /**
@@ -44,20 +71,20 @@ const CartContextProvider = ({ children }) => {
      */
 
     const addItem = (item, qty) => {
-        if( isInCart(item.id) ) { //The item is in the cart
-            cartList.map(prod => prod.id === item.id? prod.qty += qty: prod)
+        if (isInCart(item.id)) { //The item is in the cart
+            cartList.map(prod => prod.id === item.id ? prod.qty += qty : prod)
             setCartList(cartList)
         } else {  // The item is not in the cart
             item.qty = qty
             setCartList([...cartList, item])
         }
 
-        let options = { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ id_prod: item.id })}
+        let options = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id_prod: item.id }) }
         fetch(`http://127.0.0.1:8080/api/carrito/${cartId}/productos`, options)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data); // JSON data parsed by `data.json()` call
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data); // JSON data parsed by `data.json()` call
+            })
 
         setCartCounter(cartCounter + qty)
         setSubTotal(subTotal + item.price * qty)
@@ -73,13 +100,13 @@ const CartContextProvider = ({ children }) => {
         setCartCounter(cartCounter - item.qty)
         setSubTotal(subTotal - item.price * item.qty)
         setCartList(cartList.filter(prod => prod.id !== itemId))
-        
+
         let options = { method: 'DELETE' }
         fetch(`http://127.0.0.1:8080/api/carrito/${cartId}/productos/${itemId}`, options)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data); // JSON data parsed by `data.json()` call
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data); // JSON data parsed by `data.json()` call
+            })
     }
 
 
@@ -95,23 +122,23 @@ const CartContextProvider = ({ children }) => {
 
         let options = { method: 'DELETE' }
         await fetch(`http://127.0.0.1:8080/api/carrito/${cartId}`, options)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data); // JSON data parsed by `data.json()` call
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data); // JSON data parsed by `data.json()` call
+            })
 
         let newCart_id = await (fetch(`http://localhost:8080/api/carrito/`, { method: 'POST' })
-                            .then(res => res.json())
-                            .then(data => {
-                                console.log(data)
-                                return data.id
-                            }))
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                return data.id
+            }))
         setCartid(newCart_id)
         setCartList([])
     }
 
     return (
-        <CartContext.Provider value={{ cartList, cartCounter, subTotal, addItem, removeItem, clear, user, setUser }}>
+        <CartContext.Provider value={{ cartList, cartCounter, subTotal, addItem, removeItem, clear, user, setUser, getUser }}>
             {children}
         </CartContext.Provider>
     )

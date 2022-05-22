@@ -17,10 +17,12 @@ import { useCartContext } from '../../context/CartContext';
 
 const NavigationBar = () => {
 
-  const {user} = useCartContext()
+  const {user, getUser} = useCartContext()
   const [products, loadingProducts] = useFetch();
   const [codes, setCodes] = useState([]);
   const [loadingCodes, setLoadingCodes] = useState(true);
+
+  
 
   useEffect(() => {
     if (!loadingProducts) {
@@ -28,11 +30,12 @@ const NavigationBar = () => {
       products.forEach(prod => { if (!(arrayTemp.includes(prod.code))) { arrayTemp.push(prod.code) } });
       setCodes(arrayTemp);
       setLoadingCodes(false);
+      getUser()
     }
     return() => {
       setLoadingCodes(true);
     }
-  }, [user, products, loadingProducts])
+  }, [products, loadingProducts])
 
   return (
     loadingCodes ? <Loading />
@@ -72,7 +75,7 @@ const NavigationBar = () => {
                 </Nav>
                   
                 <div className="d-flex flex-row align-items-center">
-                  <span> { user? user.firstname + user.lastname: 'No login yet'}</span>
+                  <span> { user? user?.firstname + user?.lastname: 'No login yet'}</span>
                 </div>
 
                 <div className="d-flex flex-row align-items-center">
