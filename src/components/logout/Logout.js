@@ -16,8 +16,11 @@ const Logout = () => {
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);
-                     // JSON data parsed by `data.json()` call
+                    localStorage.removeItem('currentUser')
                 })
+
+            window.location.reload()
+
         } catch (error) {
             console.log(error)
         }

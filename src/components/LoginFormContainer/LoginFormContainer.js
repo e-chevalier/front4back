@@ -42,17 +42,25 @@ const LoginFormContainer = () => {
                     .then(res => { // JSON data parsed by `data.json()` call
                         console.log(res)
                         setUser(res.data || null)
-                        alert("Login Status: " + res.status)
+                        //alert("Login Status: " + res.status)
+                        if( res.status === "NOTLOGGEDIN" ) {
+                            setValidated(false);
+                            alert("Usuario o password incorrecto")
+                        } else {
+                            setValidated(true);
+                            localStorage.setItem('currentUser', JSON.stringify(res.data))
+                            window.location.reload()
+                        }
                     })
 
                 handleClose()
-                //window.location.reload()
-
+                
             } else {
                 console.log("FORM LOGIN NO VALIDADO")
+                setValidated(true);
             }
 
-            setValidated(true);
+            
 
         } catch (error) {
             console.log(error)

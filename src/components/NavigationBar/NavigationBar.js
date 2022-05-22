@@ -17,12 +17,12 @@ import { useCartContext } from '../../context/CartContext';
 
 const NavigationBar = () => {
 
-  const {user, getUser} = useCartContext()
+  const { user, setUser } = useCartContext()
   const [products, loadingProducts] = useFetch();
   const [codes, setCodes] = useState([]);
   const [loadingCodes, setLoadingCodes] = useState(true);
 
-  
+
 
   useEffect(() => {
     if (!loadingProducts) {
@@ -30,12 +30,18 @@ const NavigationBar = () => {
       products.forEach(prod => { if (!(arrayTemp.includes(prod.code))) { arrayTemp.push(prod.code) } });
       setCodes(arrayTemp);
       setLoadingCodes(false);
-      getUser()
     }
-    return() => {
+    return () => {
       setLoadingCodes(true);
     }
-  }, [products, loadingProducts])
+  }, [user, products, loadingProducts])
+
+
+  const getUserData = () => {
+    let currentUser = localStorage.getItem('currentUser')
+    return currentUser ? JSON.parse(currentUser) : { username: '' }
+  }
+
 
   return (
     loadingCodes ? <Loading />
@@ -51,7 +57,7 @@ const NavigationBar = () => {
 
               <Navbar.Text className="d-flex justify-content-between text-right order-lg-1 px-md-4">
                 <Link to={'/cart'}>
-                  <CartWidget/>
+                  <CartWidget />
                 </Link>
                 <Navbar.Toggle className="border-0 mx-3" aria-controls="navbarScroll" />
               </Navbar.Text>
@@ -67,25 +73,29 @@ const NavigationBar = () => {
                           products
                             .filter(prod => prod.code === code)
                             .map(prod =>
-                                <NavDropdown.Item key={prod.id} as={Link} to={`/item/${prod.id}`}>{prod.title}</NavDropdown.Item>
+                              <NavDropdown.Item key={prod.id} as={Link} to={`/item/${prod.id}`}>{prod.title}</NavDropdown.Item>
                             )
                         }
                       </NavDropdown>)
                   }
                 </Nav>
-                  
-                <div className="d-flex flex-row align-items-center">
-                  <span> { user? user?.firstname + user?.lastname: 'No login yet'}</span>
+
+                <div className="d-flex flex-row align-items-center pe-4">
+                  <span> {getUserData().username}</span>
                 </div>
 
                 <div className="d-flex flex-row align-items-center">
-                  <div id="loginContainer">
-                    
-                    <RegistrationFormContainer />
-                    <LoginFormContainer />
-                    <Logout />
-                  </div>
+
+                  {
+                    localStorage.getItem('currentUser') ?
+                      <Logout /> :
+                      <>
+                        <RegistrationFormContainer />
+                        <LoginFormContainer />
+                      </>
+                  }
                 </div>
+
               </Navbar.Collapse>
             </Container>
           </Navbar>

@@ -25,7 +25,7 @@ const CartContextProvider = ({ children }) => {
 
     useEffect(() => {
         setCartList(products)
-
+        
     }, [products, loading]);
 
 
