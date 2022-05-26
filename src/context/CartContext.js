@@ -20,40 +20,43 @@ const CartContextProvider = ({ children }) => {
     const [cartList, setCartList] = useState([])
     const [cartCounter, setCartCounter] = useState(0)
     const [subTotal, setSubTotal] = useState(0)
+    const [shippingCost, setShippingCost] = useState(500)
 
     const [user, setUser] = useState(null)
 
+
+
     useEffect(() => {
         setCartList(products)
-        
+
     }, [products, loading]);
 
 
 
-    /**
-     * 
-     */
-    const getUser = async () => {
-        try {
+    // /**
+    //  * 
+    //  */
+    // const getUser = async () => {
+    //     try {
 
-            let options = {
-                method: 'GET',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' }
-            }
+    //         let options = {
+    //             method: 'GET',
+    //             credentials: 'include',
+    //             headers: { 'Content-Type': 'application/json' }
+    //         }
 
-            await fetch(`http://127.0.0.1:8080/api/login`, options)
-                .then(res => res.json())
-                .then(res => { // JSON data parsed by `data.json()` call
-                    console.log(res)
-                    setUser(res.data || null)
-                    //alert("GETUSER: " + res.data.username)
-                })
+    //         await fetch(`http://127.0.0.1:8080/api/login`, options)
+    //             .then(res => res.json())
+    //             .then(res => { // JSON data parsed by `data.json()` call
+    //                 console.log(res)
+    //                 setUser(res.data || null)
+    //                 //alert("GETUSER: " + res.data.username)
+    //             })
 
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     /**
     *  Function to determine if an item is in the cart 
@@ -115,30 +118,69 @@ const CartContextProvider = ({ children }) => {
      */
 
     const clear = async () => {
-        // TODO: Iterate over cartList and restore the stock.
-        console.log("Call clear()")
-        setCartCounter(0)
-        setCartList([])
 
-        let options = { method: 'DELETE' }
-        await fetch(`http://127.0.0.1:8080/api/carrito/${cartId}`, options)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data); // JSON data parsed by `data.json()` call
-            })
+        try {
 
-        let newCart_id = await (fetch(`http://localhost:8080/api/carrito/`, { method: 'POST' })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                return data.id
-            }))
-        setCartid(newCart_id)
-        setCartList([])
+            // TODO: Iterate over cartList and restore the stock.
+            console.log("Call clear()")
+            setCartCounter(0)
+            setCartList([])
+
+            let options = { method: 'DELETE' }
+            await fetch(`http://127.0.0.1:8080/api/carrito/${cartId}`, options)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data); // JSON data parsed by `data.json()` call
+                })
+
+            let newCart_id = await (fetch(`http://localhost:8080/api/carrito/`, { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    return data.id
+                }))
+            setCartid(newCart_id)
+            setCartList([])
+
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 
+
+    /**
+     * 
+     */
+    const confirmOrder = async () => {
+
+        try {
+
+            let body = { cardId: cartId, cartList: cartList, subTotal: subTotal, shippingCost: shippingCost, user: user }
+
+            let options = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            }
+
+            fetch(`http://127.0.0.1:8080/api/confirmorder`, options)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    alert("Gracias por su pedido.")
+                })
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+
+
     return (
-        <CartContext.Provider value={{ cartList, cartCounter, subTotal, addItem, removeItem, clear, user, setUser, getUser }}>
+        <CartContext.Provider value={{ cartList, cartCounter, subTotal, shippingCost, setShippingCost, addItem, removeItem, clear, user, setUser, confirmOrder }}>
             {children}
         </CartContext.Provider>
     )

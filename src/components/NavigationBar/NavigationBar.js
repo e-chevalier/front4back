@@ -17,7 +17,7 @@ import { useCartContext } from '../../context/CartContext';
 
 const NavigationBar = () => {
 
-  const { user, setUser } = useCartContext()
+  const { user } = useCartContext()
   const [products, loadingProducts] = useFetch();
   const [codes, setCodes] = useState([]);
   const [loadingCodes, setLoadingCodes] = useState(true);

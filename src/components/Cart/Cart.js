@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const Cart = () => {
 
-    const { cartList, subTotal, removeItem, clear } = useCartContext();
+    const { cartList, subTotal, shippingCost, removeItem, clear, confirmOrder } = useCartContext();
 
     return (
         cartList.length === 0 ?
@@ -41,7 +41,7 @@ const Cart = () => {
                                 <Col xs={5}>
                                     <Row as={Link} to={`/item/${prod.id}`} className="align-items-center justify-content-center flex-column flex-md-row text-decoration-none text-dark">
                                         <Col xs={12} md={{ span: 4, offset: 2 }} className="text-center">
-                                            <img className="img_small" src={prod.thumbnail} alt={prod.title}/>
+                                            <img className="img_small" src={prod.thumbnail} alt={prod.title} />
                                         </Col>
                                         <Col xs={12} md={6} className="text-center text-md-start txt-lg-start txt-xl-start">
                                             <div>{prod.title}</div>
@@ -71,17 +71,24 @@ const Cart = () => {
                             <Col xs={6} className="text-center h6"></Col>
                             <Col xs={2} className="h6"></Col>
                             <Col xs={2} className="h6"> Envio</Col>
-                            <Col xs={2} id="checkOutEnvio" className="h6"> $300</Col>
+                            <Col xs={2} id="checkOutEnvio" className="h6"> ${shippingCost}</Col>
                         </Row>
                         <Row className="g-0">
                             <Col xs={6} className="text-center h6"></Col>
                             <Col xs={2} className="h6"></Col>
                             <Col xs={2} className="h5"> TOTAL</Col>
-                            <Col xs={2} id="checkOutTotal" className="h5">${subTotal + 300}</Col>
+                            <Col xs={2} id="checkOutTotal" className="h5">${subTotal + shippingCost}</Col>
                         </Row>
                     </ListGroup.Item>
-                    <ListGroup.Item id="checkoutButton" className="list-group-item-action list-group-item-success disabled text-center h4">
-                        INICIAR PAGO
+                    <ListGroup.Item id="checkoutButton" className="list-group-item-action list-group-item-success text-center h4">
+
+                        <Button as={Link} to={`/`} id="goHomeButton" size="md" variant="outline-dark" className="border-0 m-2">
+                            <i className="bi bi-house h3"><span className="mx-2 px-2">Seguir comprando </span></i>
+                        </Button>
+
+                        <Button onClick={confirmOrder} id="confirmOderButton" size="md" variant="outline-dark" className="border-0 m-2">
+                            <i className="bi bi-send-check h3"><span className="mx-2 px-2">Confirmar Pedido </span></i>
+                        </Button>
                     </ListGroup.Item>
                 </ListGroup>
             </Container>
