@@ -86,7 +86,12 @@ const Cart = () => {
                             <i className="bi bi-house h3"><span className="mx-2 px-2">Seguir comprando </span></i>
                         </Button>
 
-                        <Button onClick={confirmOrder} id="confirmOderButton" size="md" variant="outline-dark" className="border-0 m-2">
+                        <Button 
+                            onClick={confirmOrder} 
+                            id="confirmOderButton"
+                            size="md" variant="outline-dark"
+                            disabled={localStorage.getItem('currentUser') == null}
+                            className="border-0 m-2">
                             <i className="bi bi-send-check h3"><span className="mx-2 px-2">Confirmar Pedido </span></i>
                         </Button>
                     </ListGroup.Item>

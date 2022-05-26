@@ -156,7 +156,23 @@ const CartContextProvider = ({ children }) => {
 
         try {
 
-            let body = { cardId: cartId, cartList: cartList, subTotal: subTotal, shippingCost: shippingCost, user: user }
+            let shoppingList = cartList.map( 
+                prod => ({
+                    id: prod.id,
+                    title: prod.title,
+                    price: prod.price,
+                    qty: prod.qty,
+                    subTotal: prod.qty * prod.price}
+            ))
+
+            let body = { 
+                cartId: cartId,
+                shoppingList: shoppingList,
+                subTotal: subTotal,
+                shippingCost: shippingCost,
+                total: shippingCost + subTotal,
+                user: JSON.parse(localStorage.getItem('currentUser'))
+            }
 
             let options = {
                 method: 'POST',
@@ -164,7 +180,7 @@ const CartContextProvider = ({ children }) => {
                 body: JSON.stringify(body)
             }
 
-            fetch(`http://127.0.0.1:8080/api/confirmorder`, options)
+            fetch(`http://127.0.0.1:8080/api/carrito/${cartId}/confirmorder`, options)
                 .then(res => res.json())
                 .then(data => {
                     console.log(data)
